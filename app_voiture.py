@@ -1,6 +1,5 @@
 """
-Application Streamlit — Prédiction du prix de vente d'une voiture
-Conversion directe de l'application Gradio d'origine.
+Application Streamlit — Prédiction du prix de vente d'une voiture.
 
 Lancement en local :  streamlit run app_voiture.py
 """
@@ -14,15 +13,15 @@ import streamlit as st
 # Configuration de la page
 # ----------------------------------------------------------------------
 st.set_page_config(
-    page_title="Predict the selling price of a car",
+    page_title="Prédire prix de vente d'une voiture",
     page_icon="🚗",
     layout="centered",
 )
 
 DESCRIPTION = (
-    "This machine learning model allows us to predict the selling price of a car "
-    "from the kms driven, present price, fuel type, seller type, transmission and "
-    "age of the car."
+    "Ce modèle permet de prédire le prix de vente d'une voiture "
+    "d'occasion, à partir de ses caractéristiques (kilométrage, prix neuf, "
+    "carburant, type de vendeur, transmission et âge)."
 )
 
 # ----------------------------------------------------------------------
@@ -31,7 +30,7 @@ DESCRIPTION = (
 @st.cache_resource
 def load_artifacts():
     encoders = joblib.load("encoders.joblib")                # encodeurs
-    pipe_from_grid = joblib.load("pipe_from_grid.joblib")    # pipeline du best modèle
+    pipe_from_grid = joblib.load("rf_best_model.joblib")    # pipeline du best modèle
     return encoders, pipe_from_grid
 
 
@@ -75,13 +74,13 @@ def Pred_func_csv(file):
 # ----------------------------------------------------------------------
 # Interface
 # ----------------------------------------------------------------------
-st.title("🚗 Car selling price prediction")
+st.title("🚗 Prédiction du prix de vente d'une voiture")
 
 onglet1, onglet2 = st.tabs(["Simple Prediction", "Prédiction multiple"])
 
 # ----------------------------- Onglet 1 -------------------------------
 with onglet1:
-    st.subheader("Predict the selling price of a car with a single input")
+    st.subheader("Prédire le prix de vente à partir des caractéristiques du véhicule")
     st.write(DESCRIPTION)
 
     with st.form("formulaire_simple"):
@@ -108,7 +107,7 @@ with onglet1:
 
 # ----------------------------- Onglet 2 -------------------------------
 with onglet2:
-    st.subheader("Predict the selling price of a car with multiple inputs")
+    st.subheader("Prédire le prix de plusieurs voitures à partir d'un fichier CSV")
     st.write(DESCRIPTION)
     st.caption(
         "Le fichier CSV doit contenir, dans cet ordre, les colonnes : "
